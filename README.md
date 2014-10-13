@@ -36,13 +36,14 @@ To use the API, create a subclass of enco.Component. Then use an instance of thi
 Differences from a typical ECS
 ------------------------------
 
-Compared with a typical ECS, enco:
+(If you've never used another ECS, you don't need to worry about this part.) Compared with a typical ECS implementation, enco:
 
-* lacks the extra layer of indirection for accessing an entity's methods and data. Instead you treat an entity just like any other python object.
-* lacks a "system" or "world" object that acts as a collection of all entities in existence. Instead you use entities individually, or part of any collections you create yourself.
-* keeps together the definition of data and the behavior of that data. These are typically separated into components and the system, but enco places both of them in the component.
-* does not encapsulate data between components.
-* is not as highly optimized for speed.
+* removes the extra layer of indirection for accessing an entity's methods and data. Instead you access an entity's data and methods directly, just like with any other python object.
+* lacks a "system" or "world" object that acts as a collection of all entities in existence. Instead you use entities individually, or part of any collections you create yourself, just like any other python object.
+* keeps together the definition of data and the behavior of that data. These are typically separated, with data in the components, and behavior in the system. But enco places both of them in the component.
+* does not allow for dynamically adding or removing components at run time.
+* allows easy access to data across components, rather than encapsulating each component's data.
+* is not optimized for speed.
 
 Because of these design choices, valuing ease of use and conceptual simplicity over speed and safety checks, enco is recommended for small to medium games, rather than very large games.
 
