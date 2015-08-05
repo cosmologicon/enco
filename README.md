@@ -1,22 +1,24 @@
 enco: a python entity/component tool
 ====================================
 
-Entity Component System (ECS) is a software pattern (found especially in games) that represents entities as collections of components. This tool is a limited version of an ECS, designed to be easy to use, appropriate for small to medium games. This tool is recommended for beginners to ECS, and people writing quick or small games (e.g. game jams).
+Entity Component System (ECS) is a software pattern (found especially in games) that represents entities as collections of components. This tool is an easy-to-use, limited version of an ECS, appropriate for small to medium games. This tool is recommended for beginners to ECS, and people writing quick or small games (e.g. game jams).
 
 Quick example
 -------------
 
-To use the API, create a subclass of enco.Component. Then use an instance of this subclass as a decorator on an entity class. The entity class receives all the methods defined on any of its component classes.
+To use the API, create a subclass of enco.Component. This will be a component class. Use one or more component classes to create an entity class (which doesn't need to be a subclass of anything). Do this by using @ to decorate the entity class with instances of the component classes.
+
+The entity class receives all the methods defined on any of its component classes. When an entity's method is called, the corresponding method of every component that defines that method will be called.
 
     import enco
 
-    class PlaysSoundEffects(enco.Component):
+    class PlaysSoundEffects(enco.Component):  # PlaysSoundEffects is a component class
         def jump(self):
             print("Playing jump sound")
         def takedamage(self, damage):
             print("Playng hurt sound")
 
-    class HasHealthPoints(enco.Component):
+    class HasHealthPoints(enco.Component):  # HasHealthPoints is a second component class
         def __init__(self, maxhp):
             self.hp = self.maxhp = maxhp
         def heal(self):
@@ -24,14 +26,21 @@ To use the API, create a subclass of enco.Component. Then use an instance of thi
         def takedamage(self, damage):
             self.hp -= damage
 
-    @PlaysSoundEffects()
+    @PlaysSoundEffects()  # Decorate the entity class with instances of the component classes
     @HasHealthPoints(10)
-    class Player(object):
+    class Player(object):  # Player is now an entity class
         pass
 
-    player = Player()
+    # Player now has all the methods that are defined in at least one of its component claseses:
+    #   in this case: jump, takedamage, and heal
+    player = Player()  # Instantiate the entity class to create an entity, player
+    # Calling player.takedamage calls both PlaysSoundEffects.takedamage and
+    #   HasHealthPoints.takedamage on player
     player.takedamage(4)  # prints "Playing hurt sound"
     print(player.hp)  # prints 6
+
+For most simple cases, this should just work. For details and edge cases, 
+
 
 Differences from a typical ECS
 ------------------------------
@@ -50,7 +59,7 @@ Because of these design choices, valuing ease of use and conceptual simplicity o
 To install
 ----------
 
-Download `enco.py` and put it in your source directory.
+Download [https://raw.githubusercontent.com/cosmologicon/enco/master/enco.py](`enco.py`) and put it in your source directory.
 
 To install from command line
 ----------------------------

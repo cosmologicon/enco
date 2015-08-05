@@ -23,7 +23,7 @@ class Component(object):
 				if not callable(attr):
 					continue
 				setattr(cls, attrname, componentmethod(attrname))
-				methods[attrname] = [attr.im_func]
+				methods[attrname] = [attr]
 			cls._componentmethods = methods
 		for attrname in dir(self):
 			if attrname.startswith("__"):
@@ -33,7 +33,7 @@ class Component(object):
 				if attrname not in cls._componentmethods:
 					cls._componentmethods[attrname] = []
 					setattr(cls, attrname, componentmethod(attrname))
-				cls._componentmethods[attrname].insert(0, attr.im_func)
+				cls._componentmethods[attrname].insert(0, attr.__func__)
 			elif not hasattr(cls, attrname):
 				setattr(cls, attrname, attr)
 		return cls

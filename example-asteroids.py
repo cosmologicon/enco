@@ -331,8 +331,8 @@ class Gamestate(object):
 					obj1.die()
 
 		isalive = lambda obj: obj.alive
-		self.objects = filter(isalive, self.objects)
-		self.effects = filter(isalive, self.effects)
+		self.objects = list(filter(isalive, self.objects))
+		self.effects = list(filter(isalive, self.effects))
 		
 		if self.restarting:
 			self.restarttime += dt
