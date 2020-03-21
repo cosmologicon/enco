@@ -39,8 +39,7 @@ The entity class receives all the methods defined on any of its component classe
     player.takedamage(4)  # prints "Playing hurt sound"
     print(player.hp)  # prints 6
 
-For most simple cases, this should just work. For details and edge cases, 
-
+For simple cases, this should just work. If you care about the details and edge cases, such as the order that the various component methods are called, see [enco-test.py](https://github.com/cosmologicon/enco/blob/master/enco-test.py).
 
 Differences from a typical ECS
 ------------------------------
