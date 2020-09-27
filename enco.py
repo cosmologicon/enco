@@ -11,6 +11,7 @@ class Component(object):
 				for method in cls._componentmethods[methodname]:
 					ret = method(*args, **kwargs)
 				return ret
+			func.__name__ = methodname
 			return func
 		componentflag = "_" + cls.__name__ + "_componentified"
 		if not hasattr(cls, componentflag):
